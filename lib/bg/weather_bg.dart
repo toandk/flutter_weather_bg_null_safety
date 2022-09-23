@@ -14,11 +14,13 @@ class WeatherBg extends StatefulWidget {
   final double width;
   final double height;
   final bool showBackground;
+  final bool showCloud;
 
   WeatherBg(
       {Key? key,
       required this.weatherType,
       this.showBackground = true,
+      this.showCloud = true,
       required this.width,
       required this.height})
       : super(key: key);
@@ -50,6 +52,7 @@ class _WeatherBgState extends State<WeatherBg>
       oldBgWidget = WeatherItemBg(
         weatherType: _oldWeatherType!,
         showBackground: widget.showBackground,
+        showCloud: widget.showCloud,
         width: widget.width,
         height: widget.height,
       );
@@ -57,6 +60,7 @@ class _WeatherBgState extends State<WeatherBg>
     var currentBgWidget = WeatherItemBg(
       weatherType: widget.weatherType,
       showBackground: widget.showBackground,
+      showCloud: widget.showCloud,
       width: widget.width,
       height: widget.height,
     );
@@ -94,13 +98,15 @@ class WeatherItemBg extends StatelessWidget {
   final width;
   final height;
   final bool showBackground;
+  final bool showCloud;
 
   WeatherItemBg(
       {Key? key,
       required this.weatherType,
       this.width,
       this.height,
-      required this.showBackground})
+      required this.showBackground,
+      required this.showCloud})
       : super(key: key);
 
   /// 构建晴晚背景效果
@@ -148,7 +154,7 @@ class WeatherItemBg extends StatelessWidget {
                     weatherType: weatherType,
                   )
                 : Container(),
-            showBackground
+            showCloud
                 ? WeatherCloudBg(
                     weatherType: weatherType,
                   )
