@@ -13,10 +13,12 @@ class WeatherBg extends StatefulWidget {
   final WeatherType weatherType;
   final double width;
   final double height;
+  final bool showBackground;
 
   WeatherBg(
       {Key? key,
       required this.weatherType,
+      this.showBackground = true,
       required this.width,
       required this.height})
       : super(key: key);
@@ -47,12 +49,14 @@ class _WeatherBgState extends State<WeatherBg>
     if (_oldWeatherType != null) {
       oldBgWidget = WeatherItemBg(
         weatherType: _oldWeatherType!,
+        showBackground: widget.showBackground,
         width: widget.width,
         height: widget.height,
       );
     }
     var currentBgWidget = WeatherItemBg(
       weatherType: widget.weatherType,
+      showBackground: widget.showBackground,
       width: widget.width,
       height: widget.height,
     );
@@ -89,8 +93,14 @@ class WeatherItemBg extends StatelessWidget {
   final WeatherType weatherType;
   final width;
   final height;
+  final bool showBackground;
 
-  WeatherItemBg({Key? key, required this.weatherType, this.width, this.height})
+  WeatherItemBg(
+      {Key? key,
+      required this.weatherType,
+      this.width,
+      this.height,
+      required this.showBackground})
       : super(key: key);
 
   /// 构建晴晚背景效果
@@ -133,10 +143,16 @@ class WeatherItemBg extends StatelessWidget {
       child: ClipRect(
         child: Stack(
           children: [
-            WeatherColorBg(weatherType: weatherType,),
-            WeatherCloudBg(
-              weatherType: weatherType,
-            ),
+            showBackground
+                ? WeatherColorBg(
+                    weatherType: weatherType,
+                  )
+                : Container(),
+            showBackground
+                ? WeatherCloudBg(
+                    weatherType: weatherType,
+                  )
+                : Container(),
             _buildRainSnowBg(),
             _buildThunderBg(),
             _buildNightStarBg(),
